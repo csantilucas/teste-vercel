@@ -1,0 +1,25 @@
+{
+  "name": "teste-vercel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csantilucas/teste-vercel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csantilucas/teste-vercel/issues"
+  },
+  "homepage": "https://github.com/csantilucas/teste-vercel#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

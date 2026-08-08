@@ -1,33 +1,45 @@
-const elemento = document.getElementById('app') as HTMLElement;
-const elemento1 = document.getElementById('res') as HTMLElement;
+const elementoRes = document.getElementById('res') as HTMLElement;
+const btnHome = document.getElementById('btn-home') as HTMLButtonElement;
+const btnTest = document.getElementById('btn-test') as HTMLButtonElement;
 
-// Use import.meta.env em vez de process.env
-const url = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_URL;
 
-async function fetchData() {
+// Função para buscar a rota principal ("/")
+async function fetchHome() {
   try {
-    const response = await fetch(url, {
-      headers: {
-        'Accept': 'application/json'
-      }
+    elementoRes.innerHTML = "<p>Carregando...</p>";
+    const response = await fetch(`${baseUrl}/`, {
+      headers: { 'Accept': 'application/json' }
     });
 
-    if (!response.ok) {
-      console.log("Erro na requisição:", response.status, response.statusText);
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-    const text = await response.text();
-    console.log('Resposta bruta da API:', text);
-
-    const data = JSON.parse(text);
-    elemento.innerHTML = `<h1>resposta da api: ${response.status}</h1>`;
-    elemento1.innerHTML = `<h1>resposta da api: ${data.message}</h1>`;
-    console.log('Success:', data);
-
+    const data = await response.json();
+    elementoRes.innerHTML = `<h1>Resposta /: ${data.message}</h1>`;
   } catch (error) {
     console.error('Fetch error:', error);
+    elementoRes.innerHTML = `<p style="color: red;">Erro ao carregar rota /</p>`;
   }
 }
 
-fetchData();
+// Função para buscar a rota /test
+async function fetchTest() {
+  try {
+    elementoRes.innerHTML = "<p>Carregando...</p>";
+    const response = await fetch(`${baseUrl}/test`, {
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const data = await response.json();
+    elementoRes.innerHTML = `<h1>Resposta /test: ${data.message}</h1>`;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    elementoRes.innerHTML = `<p style="color: red;">Erro ao carregar rota /test</p>`;
+  }
+}
+
+// Vincula os eventos de clique aos botões
+btnHome.addEventListener('click', fetchHome);
+btnTest.addEventListener('click', fetchTest);
